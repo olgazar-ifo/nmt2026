@@ -32,6 +32,10 @@
   .btn.off .arrow::after{font-size:.78rem}
   .ukm{--c:var(--ukm)} .mat{--c:var(--mat)} .hist{--c:var(--hist)}
   footer{text-align:center;color:var(--muted);font-size:.85rem;padding:0 16px 30px}
+  footer p{margin:6px 0}
+  .source{max-width:700px;margin:0 auto 10px !important;padding:14px 18px;background:#fff;border:1px solid var(--line);
+          border-radius:10px;font-size:.92rem;color:var(--text)}
+  .source a{color:#1f6fd1;font-weight:600;word-break:break-all}
 </style>
 </head>
 <body>
@@ -44,7 +48,11 @@
   <div class="grid" id="grid"></div>
 </main>
 
-<footer>Оберіть предмет і район, щоб переглянути результати громад</footer>
+<footer>
+  <p class="source">Дані взято та узагальнено на основі інформації з сайту:<br>
+    <a href="https://lv.testportal.gov.ua/riversnmt/indexTgUa.php" target="_blank" rel="noopener">lv.testportal.gov.ua/riversnmt/indexTgUa.php</a></p>
+  <p>Оберіть предмет і район, щоб переглянути результати громад</p>
+</footer>
 
 <script>
   // Скорочення: Ukm — українська мова, Mat — математика, Hist — історія України
