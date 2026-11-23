@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>НМТ-2026: результати громад Миколаївщини</title>
+<style>
+  :root{
+    --bg:#f4f6fa; --card:#ffffff; --text:#1d2433; --muted:#5b6578; --line:#e2e6ee;
+    --ukm:#1f6fd1; --mat:#d1541f; --hist:#2c8a4b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+  header{background:linear-gradient(135deg,#1d3a6e,#2c5aa0);color:#fff;padding:36px 20px 40px;text-align:center}
+  header h1{margin:0 0 8px;font-size:clamp(1.5rem,3.5vw,2.2rem)}
+  header p{margin:0;opacity:.9;font-size:1.05rem}
+  main{max-width:1100px;margin:-24px auto 40px;padding:0 16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+  .subject{background:var(--card);border-radius:14px;box-shadow:0 4px 18px rgba(20,40,80,.08);overflow:hidden;border-top:6px solid var(--c)}
+  .subject h2{margin:0;padding:18px 20px 6px;font-size:1.3rem;color:var(--c);display:flex;align-items:center;gap:10px}
+  .subject .ico{font-size:1.5rem}
+  .subject .hint{margin:0;padding:0 20px 14px;color:var(--muted);font-size:.92rem}
+  .btns{display:flex;flex-direction:column;gap:10px;padding:0 20px 22px}
+  .btn{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-radius:10px;
+       border:2px solid var(--c);color:var(--c);text-decoration:none;font-weight:600;font-size:1rem;
+       transition:background .15s,color .15s,transform .15s}
+  .btn:hover,.btn:focus-visible{background:var(--c);color:#fff;transform:translateY(-1px);outline:none}
+  .btn .arrow{font-size:1.1rem}
+  .btn.off{border-color:var(--line);color:#a0a8b8;background:#f7f8fb;pointer-events:none}
+  .btn.off .arrow::after{content:"незабаром";font-size:.78rem;font-weight:500}
+  .btn.off .arrow{font-size:0}
+  .btn.off .arrow::after{font-size:.78rem}
+  .ukm{--c:var(--ukm)} .mat{--c:var(--mat)} .hist{--c:var(--hist)}
+  footer{text-align:center;color:var(--muted);font-size:.85rem;padding:0 16px 30px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Результати НМТ-2026</h1>
+  <p>у розрізі територіальних громад районів Миколаївської області</p>
+</header>
+
+<main>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>Оберіть предмет і район, щоб переглянути результати громад</footer>
+
+<script>
+  // Скорочення: Ukm — українська мова, Mat — математика, Hist — історія України
+  // B — Баштанський, V — Вознесенський, M — Миколаївський, P — Первомайський
+  const subjects = [
+    {code:"Ukm",  name:"Українська мова", cls:"ukm",  ico:"📘"},
+    {code:"Mat",  name:"Математика",      cls:"mat",  ico:"📐"},
+    {code:"Hist", name:"Історія України", cls:"hist", ico:"📜"}
+  ];
+  const districts = [
+    {code:"B", name:"Баштанський район"},
+    {code:"V", name:"Вознесенський район"},
+    {code:"M", name:"Миколаївський район"},
+    {code:"P", name:"Первомайський район"}
+  ];
+
+  const grid = document.getElementById("grid");
+  subjects.forEach(s => {
+    const card = document.createElement("section");
+    card.className = "subject " + s.cls;
+    card.innerHTML = `<h2><span class="ico">${s.ico}</span>${s.name}</h2>
+                      <p class="hint">Результати громад за районами</p>
+                      <div class="btns"></div>`;
+    const box = card.querySelector(".btns");
+    districts.forEach(d => {
+      const a = document.createElement("a");
+      a.className = "btn";
+      a.href = `${s.code}_${d.code}.html`;
+      a.innerHTML = `<span>${d.name}</span><span class="arrow">→</span>`;
+      box.appendChild(a);
+      checkFile(a);
+    });
+    grid.appendChild(card);
+  });
+
+  // Якщо файлу ще немає в репозиторії — кнопка стає неактивною з позначкою «незабаром».
+  // Перевірка працює на сайті (GitHub Pages); при відкритті з диска всі кнопки активні.
+  function checkFile(a){
+    if (location.protocol === "file:") return;
+    fetch(a.href, {method:"HEAD", cache:"no-store"})
+      .then(r => { if (!r.ok) markOff(a); })
+      .catch(() => {});
+  }
+  function markOff(a){
+    a.classList.add("off");
+    a.removeAttribute("href");
+    a.setAttribute("aria-disabled","true");
+  }
+</script>
+</body>
+</html>
