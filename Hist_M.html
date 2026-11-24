@@ -70,10 +70,10 @@ tbody tr:hover td:first-child{text-decoration:underline}
   <h1>Історія України, НМТ-2026: лише Миколаївська громада вища за середнє по Україні, а Ольшанська за рік втратила 18 пунктів</h1>
   <p class="lede">Кожна лінія — відхилення середнього результату учасників громади від середнього по Україні, у відсотках. Блакитна «ріка» — діапазон від найнижчого до найвищого показника серед усіх громад країни. Жовта лінія — Україна (0).</p>
   <div class="kpis">
-    <div class="kpi"><b>1 з 17</b><span>громад вище середнього по Україні у 2026 (Миколаївська, +1,2)</span></div>
-    <div class="kpi"><b>10 з 17</b><span>громад покращили показник порівняно з 2025</span></div>
+    <div class="kpi"><b>1 з 19</b><span>громад вище середнього по Україні у 2026 (Миколаївська, +1,2)</span></div>
+    <div class="kpi"><b>11 з 19</b><span>громад покращили показник порівняно з 2025</span></div>
     <div class="kpi"><b>−34,6</b><span>найбільше відставання у 2026 — Нечаянська громада</span></div>
-    <div class="kpi"><b>−19,8</b><span>просте середнє 17 громад у 2026 (у 2025 було −19,9; без урахування кількості учасників)</span></div>
+    <div class="kpi"><b>−19,2</b><span>просте середнє 19 громад у 2026 (у 2025 було −19,0; без урахування кількості учасників)</span></div>
   </div>
 
   <div class="bar">
@@ -84,7 +84,7 @@ tbody tr:hover td:first-child{text-decoration:underline}
     <span class="hint">Натисніть на громаду, щоб виділити її кольором (до 4 одночасно).</span>
   </div>
   <div class="chips" id="chips"></div>
-  <div class="fig" id="fig"><svg id="chart" role="img" aria-label="Відхилення результатів з історії України 17 громад Миколаївського району від середнього по Україні, 2022–2026"></svg><div class="tip" id="tip"></div></div>
+  <div class="fig" id="fig"><svg id="chart" role="img" aria-label="Відхилення результатів з історії України 19 громад Миколаївського району від середнього по Україні, 2022–2026"></svg><div class="tip" id="tip"></div></div>
   <div class="legend">
     <span><i class="sw" style="background:var(--river);border:1px solid var(--riverEdge)"></i>Усі громади країни (від мінімуму до максимуму)</span>
     <span><i class="sw" style="background:var(--ua);height:3px"></i>Україна = 0</span>
@@ -100,9 +100,9 @@ tbody tr:hover td:first-child{text-decoration:underline}
 
 <section class="band" style="padding-top:0">
   <ul class="notes">
-    <li>Показники громад — з наданих діаграм (відхилення від середнього по Україні, %). Діаграм Мішково-Погорілівської та Новоодеської громад для історії України не надано, тож тут 17 громад із 19.</li>
+    <li>Показники громад — з наданих діаграм (відхилення від середнього по Україні, %).</li>
     <li>Межі «ріки» (мінімум і максимум серед усіх громад країни): 2022 — від −68,4 до +47,45; 2023 — від −56 до +96,2; 2024 — від −51 до +51,9; 2025 — від −54,8 до +93,1; 2026 — від −47,2 до +99,2.</li>
-    <li>Середнє 17 громад — просте, без зважування на кількість учасників; для точного районного показника потрібна кількість учасників у кожній громаді.</li>
+    <li>Середнє 19 громад — просте, без зважування на кількість учасників; для точного районного показника потрібна кількість учасників у кожній громаді.</li>
   </ul>
 </section>
 </main>
@@ -121,7 +121,9 @@ const D=[
  ["Костянтинівська",[-31.83,-22,-20.2,-20.1,-21.7]],
  ["Куцурубська",[-20.8,-10.4,-23.1,-25,-23.2]],
  ["Миколаївська",[-0.49,-2.7,-0.6,-0.6,1.2]],
+ ["Мішково-Погорілівська",[-0.95,-2.9,-17.3,-10.5,-8]],
  ["Нечаянська",[-21.01,-32.3,-21.5,-27.1,-34.6]],
+ ["Новоодеська",[-13.45,-5.5,-16.1,-11.8,-21]],
  ["Ольшанська",[-8.64,-23,-17.7,-4.6,-22.9]],
  ["Очаківська",[-9.21,-8.5,-4.7,-14.5,-23.9]],
  ["Радісносадівська",[-27.23,-13,-26.1,-20.3,-23]],
@@ -133,7 +135,7 @@ const D=[
 const byLast=[...D].sort((a,b)=>b.v[4]-a.v[4]);
 const fmt=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toLocaleString('uk-UA',{maximumFractionDigits:2});
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let pins=[byLast[0].id,byLast[byLast.length-1].id,10,2];   // Миколаївська, Нечаянська, Ольшанська (найбільше погіршення), Воскресенська (найбільше покращення)
+let pins=[byLast[0].id,byLast[byLast.length-1].id,12,2];   // Миколаївська, Нечаянська, Ольшанська (найбільше погіршення), Воскресенська (найбільше покращення)
 let slot={};pins.forEach((p,i)=>slot[p]=i);
 let hover=null,zoom=false,yearHover=null;
 const svg=document.getElementById('chart'),fig=document.getElementById('fig'),tip=document.getElementById('tip');
@@ -253,7 +255,7 @@ function table(){
   byLast.forEach(d=>{const ch=d.v[4]-d.v[3];
     h+=`<tr><td>${esc(d.n)}</td>${d.v.map(cell).join('')}<td>${ch>0?'▲ ':'▼ '}${fmt(+ch.toFixed(1))}</td><td>${fmt(+avg(d.v).toFixed(1))}</td></tr>`});
   const col5=Y.map((_,i)=>avg(D.map(d=>d.v[i])));
-  h+=`</tbody><tfoot><tr><td>Просте середнє 17 громад</td>${col5.map(v=>`<td>${fmt(+v.toFixed(1))}</td>`).join('')}<td>${fmt(+(col5[4]-col5[3]).toFixed(1))}</td><td>${fmt(+avg(col5).toFixed(1))}</td></tr></tfoot>`;
+  h+=`</tbody><tfoot><tr><td>Просте середнє 19 громад</td>${col5.map(v=>`<td>${fmt(+v.toFixed(1))}</td>`).join('')}<td>${fmt(+(col5[4]-col5[3]).toFixed(1))}</td><td>${fmt(+avg(col5).toFixed(1))}</td></tr></tfoot>`;
   document.getElementById('table').innerHTML=h;
 }
 chips();table();
