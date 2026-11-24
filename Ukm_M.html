@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Українська мова: громади Миколаївського району</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: діловий, як аналітична довідка для начальників управлінь освіти
+   IDEA: зведений аркуш моніторингу — одна «ріка» країни, дванадцять громад району на ній
+   PICTURE: велика діаграма-ріка з лініями громад і підписами справа; теплова таблиця під нею
+   COLOUR and TYPE: білий аркуш, блакитна ріка, жовта лінія України, кобальт як акцент; Manrope + Inter
+   LAYOUT: заголовок-висновок, три ключові числа, діаграма на всю ширину, таблиця, примітки */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#15171b);--ink:light-dark(#14171f,#eceef2);--ink2:light-dark(#4a5060,#b4b9c4);--mut:light-dark(#7a8090,#868c99);
+--line:light-dark(#e3e6ec,#2b2f37);--river:light-dark(#d8e8f8,#1d3046);--riverEdge:light-dark(#b9d4f0,#2d4a6b);
+--ua:#f2c400;--grey:light-dark(#9aa1b0,#5d6472);--chip:light-dark(#f2f4f8,#22252c);
+--c0:light-dark(#1f5fd1,#4f86f0);--c1:light-dark(#e2571e,#e0692e);--c2:light-dark(#0f9a6e,#1f9d74);--c3:light-dark(#8e44c9,#9a66d6);
+--neg:light-dark(#c2410c,#e0692e);--pos:light-dark(#1f5fd1,#4f86f0);--mid:light-dark(#f4f4f2,#24272d);--tip:light-dark(#ffffff,#1f2228)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(24px,4vw,52px) max(5vw,16px);max-width:1240px;margin:0 auto}
+h1{font:700 clamp(26px,3.6vw,42px)/1.08 Manrope,Inter,sans-serif;margin:0 0 10px;text-wrap:balance;letter-spacing:-.01em}
+h2{font:700 22px/1.2 Manrope,Inter,sans-serif;margin:0 0 6px}
+.lede{color:var(--ink2);max-width:70ch;margin:0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px;margin:22px 0 8px}
+.kpi{border-top:3px solid var(--ink);padding:10px 2px 0}
+.kpi b{display:block;font:700 clamp(26px,3vw,34px)/1.1 Manrope,Inter,sans-serif;white-space:nowrap}
+.kpi span{color:var(--ink2);font-size:14px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:22px 0 10px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:transparent;color:var(--ink2);font:500 14px Inter,sans-serif;padding:0 14px;min-height:40px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.hint{color:var(--mut);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:999px;padding:0 12px;min-height:36px;font:500 14px Inter,sans-serif;cursor:pointer;white-space:nowrap}
+.chip i{width:10px;height:10px;border-radius:50%;background:var(--grey)}
+.chip em{font-style:normal;color:var(--ink2);font-variant-numeric:tabular-nums}
+.chip[aria-pressed=true]{border-color:currentColor;background:transparent}
+button:focus-visible{outline:2px solid var(--c0);outline-offset:2px}
+.fig{position:relative;height:clamp(380px,56vw,560px)}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--ink2);font-size:14px;margin-top:6px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.sw{display:inline-block;width:18px;height:10px;border-radius:2px}
+.tip{position:absolute;pointer-events:none;background:var(--tip);border:1px solid var(--line);border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.14);padding:10px 12px;font-size:13px;min-width:210px;opacity:0;transition:opacity .12s}
+.tip h4{margin:0 0 6px;font:600 14px Inter,sans-serif}
+.tip .r{display:flex;justify-content:space-between;gap:14px;line-height:1.5}
+.tip .r b{font-weight:600}.tip .r.hl{font-weight:700;color:var(--ink)}.tip .r span:last-child{font-variant-numeric:tabular-nums}
+.tip .x{color:var(--mut);margin-top:4px;border-top:1px solid var(--line);padding-top:4px}
+.scroll{overflow-x:auto}
+table{border-collapse:separate;border-spacing:2px;width:100%;font-size:15px;font-variant-numeric:tabular-nums}
+th{font-weight:600;color:var(--ink2);text-align:right;padding:6px 8px;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+td{padding:7px 8px;text-align:right;white-space:nowrap;border-radius:4px}
+td.h{border-radius:4px}
+tfoot td{color:var(--ink2);border-top:1px solid var(--line)}
+tbody tr:hover td:first-child{text-decoration:underline}
+.notes{color:var(--ink2);font-size:14px;max-width:80ch}
+.notes li{margin:4px 0}
+@media(prefers-reduced-motion:reduce){.tip{transition:none}}
+@media(max-width:600px){table{font-size:13px}td,th{padding:5px 5px}}
+</style>
+</head>
+<body>
+<main>
+<section class="band">
+  <h1>Українська мова, НМТ-2026: лише Миколаївська громада вища за середнє по Україні, а 13 із 19 громад району погіршили результат</h1>
+  <p class="lede">Кожна лінія — відхилення середнього результату учасників громади від середнього по Україні, у відсотках. Блакитна «ріка» — діапазон від найнижчого до найвищого показника серед усіх громад країни. Жовта лінія — Україна (0).</p>
+  <div class="kpis">
+    <div class="kpi"><b>1 з 19</b><span>громад вище середнього по Україні у 2026 (Миколаївська, +4,9)</span></div>
+    <div class="kpi"><b>13 з 19</b><span>громад мають гірший показник, ніж у 2025</span></div>
+    <div class="kpi"><b>−33,5</b><span>найбільше відставання у 2026 — Заводська громада</span></div>
+    <div class="kpi"><b>−20,7</b><span>просте середнє 19 громад у 2026 (у 2025 було −19,3; без урахування кількості учасників)</span></div>
+  </div>
+
+  <div class="bar">
+    <div class="seg" role="group" aria-label="Масштаб">
+      <button id="zFull" aria-pressed="true">Уся ріка</button>
+      <button id="zNear" aria-pressed="false">Наблизити до громад</button>
+    </div>
+    <span class="hint">Натисніть на громаду, щоб виділити її кольором (до 4 одночасно).</span>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="fig" id="fig"><svg id="chart" role="img" aria-label="Відхилення результатів з української мови 19 громад Миколаївського району від середнього по Україні, 2022–2026"></svg><div class="tip" id="tip"></div></div>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--river);border:1px solid var(--riverEdge)"></i>Усі громади країни (від мінімуму до максимуму)</span>
+    <span><i class="sw" style="background:var(--ua);height:3px"></i>Україна = 0</span>
+    <span><i class="sw" style="background:var(--grey);height:2px"></i>Громади Миколаївського району</span>
+  </div>
+</section>
+
+<section class="band" style="padding-top:0">
+  <h2 id="tbl">Ті самі дані таблицею</h2>
+  <p class="lede" style="margin-bottom:12px">Громади впорядковано за результатом 2026 року. Чим насиченіший помаранчевий — тим більше відставання від середнього по Україні; синій — вище середнього.</p>
+  <div class="scroll"><table id="table"></table></div>
+</section>
+
+<section class="band" style="padding-top:0">
+  <ul class="notes">
+    <li>Показники громад — з наданих діаграм (відхилення від середнього по Україні, %).</li>
+    <li>Межі «ріки» (мінімум і максимум серед усіх громад країни): 2022 — від −60,59 до +37,94; 2023 — від −55,1 до +32,3; 2024 — від −62,9 до +37,2; 2025 — від −57,4 до +34,3; 2026 — від −60,2 до +90,5. Різкий підйом верхньої межі у 2026 році відображає окрему громаду з дуже високим показником.</li>
+    <li>Середнє 19 громад — просте, без зважування на кількість учасників; для точного районного показника потрібна кількість учасників у кожній громаді.</li>
+  </ul>
+</section>
+</main>
+
+<script>
+{
+const Y=[2022,2023,2024,2025,2026];
+const BAND={lo:[-60.59,-55.1,-62.9,-57.4,-60.2],hi:[37.94,32.3,37.2,34.3,90.5]};
+const D=[
+ ["Березанська",[-6.85,-25.1,-18.3,-24.6,-25.2]],
+ ["Веснянська",[-13.46,-4.8,-29.6,-11.9,-15.2]],
+ ["Воскресенська",[-14.64,-2.8,-15.6,-22.5,-23.9]],
+ ["Галицинівська",[-10.78,4.1,-18.4,-22,-26.1]],
+ ["Заводська",[-35.25,-25.9,-15.1,-27.6,-33.5]],
+ ["Коблівська",[-29.28,-18,-20,-24.8,-20.4]],
+ ["Костянтинівська",[-29.7,-27.9,-24.6,-22.3,-23.7]],
+ ["Куцурубська",[-9.55,-14.3,-22.9,-18.1,-32.3]],
+ ["Миколаївська",[-0.03,1.3,1.7,2.1,4.9]],
+ ["Мішково-Погорілівська",[-2.41,8,-5.5,-17.1,-11.8]],
+ ["Нечаянська",[-34.72,-30.9,-19.5,-28.9,-27.4]],
+ ["Новоодеська",[-13.38,-7.4,-2.4,-5.2,-13.2]],
+ ["Ольшанська",[-7.63,-20.3,-22,-6.2,-17.3]],
+ ["Очаківська",[-6.65,-7.4,-1.2,-13.9,-19.6]],
+ ["Радісносадівська",[-19.61,-6.4,-21.7,-24.7,-24.8]],
+ ["Степівська",[-8.04,-25.3,-14.4,-24.7,-11.7]],
+ ["Сухоєланецька",[-26.65,-33.8,-36,-30.3,-33.4]],
+ ["Чорноморська",[-17.63,-24.6,-26.3,-24.4,-27.9]],
+ ["Шевченківська",[-9.38,-10.7,-16.9,-18.8,-11.2]]
+].map(([n,v],i)=>({id:i,n,v}));
+const byLast=[...D].sort((a,b)=>b.v[4]-a.v[4]);
+const fmt=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toLocaleString('uk-UA',{maximumFractionDigits:2});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let pins=[byLast[0].id,byLast[byLast.length-1].id,7,15];   // Миколаївська, Заводська, Куцурубська (найбільше погіршення), Степівська (найбільше покращення)
+let slot={};pins.forEach((p,i)=>slot[p]=i);
+let hover=null,zoom=false,yearHover=null;
+const svg=document.getElementById('chart'),fig=document.getElementById('fig'),tip=document.getElementById('tip');
+const col=id=>slot[id]!=null?`var(--c${slot[id]})`:null;
+
+function togglePin(id){
+  if(slot[id]!=null){delete slot[id];pins=pins.filter(p=>p!==id);}
+  else{
+    if(pins.length>=4){const out=pins.shift();delete slot[out];}
+    const used=new Set(Object.values(slot));let s=0;while(used.has(s))s++;
+    slot[id]=s;pins.push(id);
+  }
+  chips();draw();
+}
+function chips(){
+  const el=document.getElementById('chips');
+  el.innerHTML=byLast.map(d=>{const c=col(d.id);return `<button class="chip" data-id="${d.id}" aria-pressed="${c?'true':'false'}" ${c?`style="color:${c}"`:''}><i ${c?`style="background:${c}"`:''}></i><span style="color:var(--ink)">${esc(d.n)}</span><em>${fmt(d.v[4])}</em></button>`}).join('');
+}
+document.getElementById('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)togglePin(+b.dataset.id)});
+document.getElementById('chips').addEventListener('mouseover',e=>{const b=e.target.closest('.chip');const h=b?+b.dataset.id:null;if(h!==hover){hover=h;draw()}});
+document.getElementById('chips').addEventListener('mouseleave',()=>{hover=null;draw()});
+const zF=document.getElementById('zFull'),zN=document.getElementById('zNear');
+zF.onclick=()=>{zoom=false;zF.setAttribute('aria-pressed','true');zN.setAttribute('aria-pressed','false');draw()};
+zN.onclick=()=>{zoom=true;zN.setAttribute('aria-pressed','true');zF.setAttribute('aria-pressed','false');draw()};
+
+let G={};
+function draw(){
+  const W=svg.clientWidth,H=svg.clientHeight;if(!W)return;
+  const wide=W>=640;
+  const m={l:wide?46:38,r:wide?224:14,t:14,b:32};
+  const [lo,hi]=zoom?[-55,15]:[-70,95];
+  const x=i=>m.l+i*(W-m.l-m.r)/(Y.length-1);
+  const y=v=>m.t+(hi-Math.max(lo,Math.min(hi,v)))/(hi-lo)*(H-m.t-m.b);
+  G={x,y,m,W,H,wide};
+  const step=zoom?10:25;let o='';
+  // grid
+  for(let t=Math.ceil(lo/step)*step;t<=hi;t+=step){
+    o+=`<line x1="${m.l}" x2="${W-m.r+(wide?8:0)}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/>`;
+    o+=`<text x="${m.l-8}" y="${y(t)+4}" text-anchor="end" font-size="12" fill="var(--mut)">${t>0?'+':''}${t===0?'0':fmt(t).replace('+','')}</text>`;
+  }
+  Y.forEach((yr,i)=>o+=`<text x="${x(i)}" y="${H-8}" text-anchor="middle" font-size="13" fill="var(--ink2)">${yr}</text>`);
+  // river (clipped in zoom mode)
+  o+=`<clipPath id="cp"><rect x="${m.l-2}" y="${m.t}" width="${W-m.l-m.r+4}" height="${H-m.t-m.b}"/></clipPath>`;
+  const yr=v=>m.t+(hi-v)/(hi-lo)*(H-m.t-m.b);
+  const top=BAND.hi.map((v,i)=>`${x(i)},${yr(v)}`),bot=BAND.lo.map((v,i)=>`${x(i)},${yr(v)}`).reverse();
+  o+=`<g clip-path="url(#cp)"><polygon points="${top.concat(bot).join(' ')}" fill="var(--river)" stroke="var(--riverEdge)" stroke-width="1"/></g>`;
+  if(yearHover!=null)o+=`<line x1="${x(yearHover)}" x2="${x(yearHover)}" y1="${m.t}" y2="${H-m.b}" stroke="var(--mut)" stroke-dasharray="3 3"/>`;
+  // Ukraine
+  o+=`<line x1="${x(0)}" x2="${x(4)}" y1="${y(0)}" y2="${y(0)}" stroke="var(--ua)" stroke-width="3"/>`;
+  const path=d=>'M'+d.v.map((v,i)=>`${x(i)},${y(v)}`).join('L');
+  const focus=hover!=null?hover:null;
+  // grey lines first, then pinned, then hovered
+  const order=[...D].sort((a,b)=>(slot[a.id]!=null)-(slot[b.id]!=null)||(a.id===focus)-(b.id===focus));
+  order.forEach(d=>{
+    const c=col(d.id),isF=d.id===focus;
+    const stroke=c||(isF?'var(--ink)':'var(--grey)');
+    const op=(focus!=null&&!isF&&!c)?.35:(c||isF?1:.75);
+    o+=`<path d="${path(d)}" fill="none" stroke="var(--bg)" stroke-width="${c||isF?6:0}" stroke-linejoin="round" opacity=".9"/>`;
+    o+=`<path d="${path(d)}" fill="none" stroke="${stroke}" stroke-width="${c||isF?2.5:1.5}" stroke-linejoin="round" opacity="${op}"/>`;
+    if(c||isF)d.v.forEach((v,i)=>o+=`<circle cx="${x(i)}" cy="${y(v)}" r="4.5" fill="var(--bg)" stroke="${stroke}" stroke-width="2"/>`);
+  });
+  // values along the focused line
+  const fd=focus!=null?D[focus]:null;
+  if(fd)fd.v.forEach((v,i)=>{const up=i===0||v>=fd.v[i-1]||i===4?-11:19;
+    o+=`<text x="${x(i)}" y="${y(v)+up}" text-anchor="middle" font-size="12.5" font-weight="600" fill="var(--ink)" stroke="var(--bg)" stroke-width="4" paint-order="stroke">${fmt(v)}</text>`});
+  // right-hand labels with collision avoidance
+  if(wide){
+    const L=D.map(d=>({d,y0:y(d.v[4]),t:`${d.n}`,v:fmt(d.v[4])}));
+    L.push({ua:true,y0:y(0),t:'Україна',v:'0'});
+    L.sort((a,b)=>a.y0-b.y0);
+    const gap=15.5;let prev=-1e9;L.forEach(l=>{l.y=Math.max(l.y0,prev+gap);prev=l.y});
+    const over=L[L.length-1].y-(H-m.b);if(over>0){L.forEach(l=>l.y-=over);for(let i=L.length-2;i>=0;i--)L[i].y=Math.min(L[i].y,L[i+1].y-gap)}
+    const lx=x(4)+22;
+    L.forEach(l=>{
+      const id=l.ua?null:l.d.id,c=l.ua?null:col(id),isF=id!=null&&id===focus;
+      const fill=l.ua?'var(--ink2)':(c||(isF?'var(--ink)':'var(--ink2)'));
+      o+=`<path d="M${x(4)+6},${l.y0}L${lx-6},${l.y}" stroke="${l.ua?'var(--ua)':(c||'var(--grey)')}" fill="none" opacity="${l.ua||c||isF?1:.6}"/>`;
+      o+=`<g ${l.ua?'':`data-id="${id}" class="lab" style="cursor:pointer"`}><rect x="${lx-2}" y="${l.y-8}" width="${m.r-26}" height="${gap}" fill="transparent"/>
+      <text x="${lx}" y="${l.y+4}" font-size="12.5" font-weight="${c||isF?600:500}" fill="${fill}">${esc(l.t)}</text>
+      <text x="${W-4}" y="${l.y+4}" text-anchor="end" font-size="12.5" font-weight="600" fill="${fill}" font-variant-numeric="tabular-nums">${l.v}</text></g>`;
+    });
+  }
+  // hit paths
+  D.forEach(d=>o+=`<path d="${path(d)}" fill="none" stroke="transparent" stroke-width="14" data-id="${d.id}" class="hit" style="cursor:pointer"/>`);
+  svg.innerHTML=o;
+}
+function showTip(i,px,py){
+  const rows=[...D].sort((a,b)=>b.v[i]-a.v[i]).map(d=>{const c=col(d.id);
+    return `<div class="r${d.id===hover?' hl':''}"><span>${c?`<i class="sw" style="background:${c};width:8px;height:8px;border-radius:50%;margin-right:6px"></i>`:''}${esc(d.n)}</span><span>${fmt(d.v[i])}</span></div>`}).join('');
+  tip.innerHTML=`<h4>${Y[i]} рік</h4>${rows}<div class="x">Усі громади країни: від ${fmt(BAND.lo[i])} до ${fmt(BAND.hi[i])}</div>`;
+  tip.style.opacity=1;
+  const fw=fig.clientWidth,tw=tip.offsetWidth,th=tip.offsetHeight;
+  let left=px+16;if(left+tw>fw)left=px-tw-16;if(left<0)left=Math.max(0,(fw-tw)/2);
+  tip.style.left=left+'px';tip.style.top=Math.max(0,Math.min(py-th/2,fig.clientHeight-th))+'px';
+}
+svg.addEventListener('mousemove',e=>{
+  const r=svg.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;
+  const t=e.target.closest('[data-id]');const h=t?+t.dataset.id:null;
+  const {x,m,W}=G;let i=null;
+  if(px>=m.l-20&&px<=x(4)+20){let best=1e9;Y.forEach((_,k)=>{const dd=Math.abs(px-x(k));if(dd<best){best=dd;i=k}})}
+  if(h!==hover||i!==yearHover){hover=h;yearHover=i;draw()}
+  if(i!=null)showTip(i,px,py);else tip.style.opacity=0;
+});
+svg.addEventListener('mouseleave',()=>{hover=null;yearHover=null;tip.style.opacity=0;draw()});
+svg.addEventListener('click',e=>{const t=e.target.closest('[data-id]');if(t)togglePin(+t.dataset.id)});
+
+// table
+function mix(a,b,t){const p=h=>h.match(/\w\w/g).map(x=>parseInt(x,16));const A=p(a),B=p(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(',')})`}
+function table(){
+  const dark=getComputedStyle(document.documentElement).colorScheme==='dark'||(document.documentElement.dataset.theme!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches&&document.documentElement.dataset.theme!=='light');
+  const isDark=document.documentElement.dataset.theme==='dark'||(document.documentElement.dataset.theme!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches);
+  const mid=isDark?'#24272d':'#f4f4f2',neg=isDark?'#e0692e':'#c2410c',pos=isDark?'#4f86f0':'#1f5fd1';
+  const cell=v=>{const t=Math.min(1,Math.abs(v)/50);const bg=mix(mid,v<0?neg:pos,t*.92);const light=isDark?t>.0:t>.55;
+    return `<td class="h" style="background:${bg};color:${t>.55?'#fff':'var(--ink)'};font-weight:${t>.55?600:400}">${fmt(v)}</td>`};
+  const avg=a=>a.reduce((s,v)=>s+v,0)/a.length;
+  let h=`<thead><tr><th>Громада</th>${Y.map(y=>`<th>${y}</th>`).join('')}<th>Зміна 2025→2026</th><th>Середнє за 5 років</th></tr></thead><tbody>`;
+  byLast.forEach(d=>{const ch=d.v[4]-d.v[3];
+    h+=`<tr><td>${esc(d.n)}</td>${d.v.map(cell).join('')}<td>${ch>0?'▲ ':'▼ '}${fmt(+ch.toFixed(1))}</td><td>${fmt(+avg(d.v).toFixed(1))}</td></tr>`});
+  const col5=Y.map((_,i)=>avg(D.map(d=>d.v[i])));
+  h+=`</tbody><tfoot><tr><td>Просте середнє 19 громад</td>${col5.map(v=>`<td>${fmt(+v.toFixed(1))}</td>`).join('')}<td>${fmt(+(col5[4]-col5[3]).toFixed(1))}</td><td>${fmt(+avg(col5).toFixed(1))}</td></tr></tfoot>`;
+  document.getElementById('table').innerHTML=h;
+}
+chips();table();
+const ro=new ResizeObserver(draw);ro.observe(svg);
+const mo=new MutationObserver(()=>{table();draw()});mo.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{table();draw()})}catch(e){}
+}
+</script>
+</body>
+</html>
